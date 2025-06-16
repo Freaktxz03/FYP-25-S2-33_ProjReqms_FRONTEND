@@ -1,0 +1,9 @@
+.bg-overlay {
+  background-color: rgba(0, 0, 0, 0.4); /* dark overlay for text contrast */
+}
+
+.card-img-overlay h2,
+.card-img-overlay p {
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
