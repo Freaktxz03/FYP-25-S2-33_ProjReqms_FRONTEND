@@ -3,13 +3,17 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import { useSession } from '../../Services/SessionContext';
+
 function AccountPage() {
   const [userInfo, setUserInfo] = useState(null);
   const [bookings, setBookings] = useState([]);
   const navigate = useNavigate();
 
+  const { user, setUser } = useSession();
+
   useEffect(() => {
-    // Fetch session user info
+    //Fetch session user info
     axios.get('http://localhost:5000/api/users/session', { withCredentials: true })
       .then(res => {
         setUserInfo(res.data);
@@ -28,7 +32,8 @@ function AccountPage() {
   };
 
   const handleLogout = async () => {
-    await axios.post('http://localhost:5000/api/users/logout', {}, { withCredentials: true });
+    await axios.post('http://localhost:5000/api/users/logout', {}, { withCredentials: true })
+    .then(() => setUser(null));
     alert('You have been logged out successfully');
     navigate('/login');
   };

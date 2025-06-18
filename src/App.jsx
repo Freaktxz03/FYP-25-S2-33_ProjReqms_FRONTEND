@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 
 //Navbar and Footer components
@@ -23,6 +23,7 @@ function App() {
     // Main App Component
     // Using BrowserRouter to handle routing 
     <>
+    <Router>
       <Navbar/>
       <div className="container mt-5 pt-5">
         <Routes>
@@ -36,6 +37,7 @@ function App() {
         </Routes>
       </div>
       <Footer/>
+    </Router>
     </>
   );
 };

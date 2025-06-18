@@ -42,13 +42,20 @@ router.post('/login', (req, res) => {
       return res.status(401).send('Invalid credentials');
     }
 
+    const user = results[0];
+
     req.session.user = {
-      id: results[0].id,
-      username: results[0].username,
+      id: user.id,
+      username: user.username,
       sessionID: req.sessionID
     };
 
-    res.status(200).json({ success: true });
+    return res.json({
+      success: true,
+      id: user.id,
+      username: user.username,
+      sessionID: req.sessionID
+    });
   });
 });
 

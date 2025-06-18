@@ -3,11 +3,15 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import { useSession } from '../../Services/SessionContext';
+
 function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
+
+  const { setUser } = useSession();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -24,7 +28,10 @@ function LoginPage() {
       }, { withCredentials: true }); // enable cookies for session
 
       if (res.data.success) {
-        navigate('/account');
+        setUser(res.data);
+        setTimeout(() => {
+          navigate('/account');
+        }, 10); // Let React finish re-rendering context
       }
     } catch (err) {
       if (err.response && err.response.status === 401) {

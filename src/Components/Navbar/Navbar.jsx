@@ -3,17 +3,15 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import brandlogo from '../../assets/brandlogo.png';
 
+import { useSession } from '../../Services/SessionContext';
+
 const Navbar = () => {
 
-  const [userInfo, setUserInfo] = useState(null);
-
-  useEffect(() => {
-    axios.get('http://localhost:5000/api/users/session', { withCredentials: true })
-      .then(res => setUserInfo(res.data))
-      .catch(() => setUserInfo(null));
-  }, []);
+  const { user } = useSession();
+  console.log('🔁 Navbar re-rendered. Current user:', user);
 
   return (
+    
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
@@ -34,8 +32,8 @@ const Navbar = () => {
             <li className="nav-item"><Link className="nav-link" to="/hotels">Hotels</Link></li>
             <li className="nav-item"><Link className="nav-link" to="/airport-transfers">Airport Transfers</Link></li>
             <li className="nav-item">
-              {userInfo ? (
-                <Link className="nav-link" to="/account">{userInfo.username}</Link>
+              {user?.username ? (
+                <Link className="nav-link" to="/account">{user.username}</Link>
               ) : (
                 <Link className="nav-link" to="/login">Login</Link>
               )}
