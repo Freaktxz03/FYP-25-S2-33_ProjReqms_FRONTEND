@@ -1,51 +1,52 @@
-//Login page component for user authentication 
+// src/Components/Pages/LoginPage.jsx
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import { loginUser } from '../../Services/Auth'
-
-
-const LoginPage = () => {
-
-  //State hooks to store username and password input values
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
+function LoginPage() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
 
-  //Function to handle login
-  const handleLogin = () => {
-    // Simulate a login action
-    // In a real application, validate the credentials against a backend service
-    
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setErrorMsg('');
+
+    if (!username || !password) {
+      return setErrorMsg('Please enter both username and password.');
+    }
+
     try {
-      loginUser(username, password);  // Call the loginUser function to validate credentials
-      alert("Login sucessfully!");    // Alert user on successful login
-      navigate('/account');           // Navigate to the account page after successful login
-    } catch (error) {                 // Catch any errors thrown by the loginUser function
-      alert(error.message);           // Alert user with the error message
+      const res = await axios.post('http://localhost:5000/api/users/login', {
+        username,
+        password
+      }, { withCredentials: true }); // enable cookies for session
+
+      if (res.data.success) {
+        navigate('/account');
+      }
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        setErrorMsg('Invalid username or password.');
+      } else {
+        setErrorMsg('Server error. Please try again later.');
+      }
     }
   };
 
   return (
-    <div className="container text-center mt-5">
+    <div className="container mt-5">
       <h2>Login</h2>
-      <div className="mb-3">
-        <input 
-          type="text" placeholder="Username" className="form-control"
-          value={username} onChange={(e) => setUsername(e.target.value)} 
-        />
-      </div>
-
-      <div className="mb-3">
-        <input 
-          type="password" placeholder="Password" className="form-control"
-          value={password} onChange={(e) => setPassword(e.target.value)} 
-        />
-      </div>
-      <button className="btn btn-primary me-2" onClick={handleLogin}>Login</button>
-      <button className="btn btn-secondary" onClick={() => navigate('/create-account')}>Create Account</button>
+      {errorMsg && <p style={{ color: 'red' }}>{errorMsg}</p>}
+      <form onSubmit={handleLogin}>
+        <input type="text" className="form-control" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} /><br />
+        <input type="password" className="form-control" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} /><br />
+        <button type="submit" className="btn btn-primary me-2">Login</button>
+        <button type="button" className="btn btn-secondary" onClick={() => navigate('/register')}>Create Account</button>
+      </form>
     </div>
   );
-};
+}
 
 export default LoginPage;
