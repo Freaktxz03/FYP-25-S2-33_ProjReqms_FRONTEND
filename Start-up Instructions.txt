@@ -1,0 +1,49 @@
+1. open terminal in vscode
+2. npm create vite@latest
+* if error, unable to run scripts because disabled
+* Set-ExecutionPolicy -ExecutionPolicy Undefined -Scope CurrentUser 
+3. npm create vite@latest
+4. Project name, package name
+5. Framework: React
+6. Variant: JavaScript
+
+7. cd (project name)
+8. npm install & npm install react-router-dom (used for internal navigation )
+9. npm install bootstrap (for use of bootstrap CSS)
+10. npm install react-bootstrap bootstrap (for use of bootstrap CSS/JS)
+11. npm install react-router-dom (for routes (aka page change) for use with SPA)
+12. npm install express mysql2 cors dotenv (express - backend svr framework, mysql2 - driver for nodejs, cors - allow frontend to communicate with backend, dotenv - handle environment variables (for DB credentials)
+13. npm install axios
+14. npm install express-session (Session + Login + Logout)
+15. Install React ES7 extension (for rafce shortcut)
+16. Open 2 terminal, 1 for npm run dev (run svr for website) / 1 for node server.js (start backend svr)
+17. Local : localhost...  (paste into browser)
+
+== For Full Rebuild ==
+(Clear vite cache and restart dev server)
+rm -rf node_modules dist .vite
+npm install
+npm run dev
+
+
+//Folders//
+node_modules folder : ext libraries and packages that project rely on, built tools, utility libraries, routing libraries 
+public folder : public assets (fonts, images, videos etc), not bundled with final output, available with URL
+
+//Important Folders//
+src (source) folder : edit mostly here
+src/assets folder : contain images, videos similar to public folder but bundled together at output
+
+//CSS Stylesheets//
+app.css : stylesheet for app.jsx
+index.css : stylesheet for main.jsx
+
+//JavaScript XML (.jsx) Files//
+App.jsx : components of the main file, exports to main.jsx /// function App() = component of the html
+main.jsx : main javascript file
+
+//Main body//
+index.html : main entry point to program, body of website with scripts to jsx files
+
+//Json file//
+package.json : include details of project name, version, build version (vite and react) 
