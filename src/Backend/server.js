@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import session from 'express-session';
 import userRoutes from './routes/users.js';
+import flightBookingRoutes from './routes/flightBookings.js';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(session({
 }));
 
 app.use('/api/users', userRoutes);
+app.use('/api/bookings', flightBookingRoutes);
 
 app.get('/', (req, res) => {
   res.send('Backend server is running');
